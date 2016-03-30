@@ -26,7 +26,9 @@
         {
             "type": "shell",
             "inline": [
-                "sudo chmod a+w /etc/apache2/sites-available/000-default.conf"
+                "sudo chmod a+w /etc/apache2/sites-available/000-default.conf",
+                "sudo chmod a+w /etc/apache2/mods-available/fastcgi.conf",
+                "sudo chmod a+w /opt/phpbrew/php/php-5.6.19/var/db/xdebug.ini"
              ]
         },
         {
@@ -34,11 +36,28 @@
           "source": "files/default.conf",  
           "destination": "/etc/apache2/sites-available/000-default.conf"
         },
-
+        {
+          "type": "file",
+          "source": "files/fastcgi.conf",  
+          "destination": "/etc/apache2/mods-available/fastcgi.conf"
+        },
+        {
+          "type": "file",
+          "source": "files/xdebug.ini",  
+          "destination": "/opt/phpbrew/php/php-5.6.19/var/db/xdebug.ini"
+        }, 
+        {
+          "type": "file",
+          "source": "files/php-fpm",  
+          "destination": "/etc/init.d/php-fpm"
+        }, 
         {
             "type": "shell",
             "inline": [
-                "sudo chmod a-w /etc/apache2/sites-available/000-default.conf"
+                "sudo chmod a-w /etc/apache2/sites-available/000-default.conf",
+                "sudo chmod a-w /etc/apache2/mods-available/fastcgi.conf",
+                "sudo chmod a+w /etc/init.d/php-fpm",
+                "update-rc.d php-fpm defaults"
              ]
         }
     ],
