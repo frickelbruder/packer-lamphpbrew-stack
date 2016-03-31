@@ -28,7 +28,8 @@
             "inline": [
                 "sudo chmod a+w /etc/apache2/sites-available/000-default.conf",
                 "sudo chmod a+w /etc/apache2/mods-available/fastcgi.conf",
-                "sudo chmod a+w /opt/phpbrew/php/php-5.6.19/var/db/xdebug.ini"
+                "sudo chmod a+w /opt/phpbrew/php/php-5.6.19/var/db/xdebug.ini",
+                "sudo chmod a+w /etc/init.d"
              ]
         },
         {
@@ -56,8 +57,9 @@
             "inline": [
                 "sudo chmod a-w /etc/apache2/sites-available/000-default.conf",
                 "sudo chmod a-w /etc/apache2/mods-available/fastcgi.conf",
-                "sudo chmod a+w /etc/init.d/php-fpm",
-                "update-rc.d php-fpm defaults"
+                "sudo chmod a+x /etc/init.d/php-fpm",
+                "sudo chmod a-w /etc/init.d",
+                "sudo update-rc.d php-fpm defaults"
              ]
         }
     ],
@@ -111,7 +113,7 @@
               "box_tag": "{{user `cloud_repo`}}",
               "access_token": "{{user `cloud_token`}}",
               "version": "{{user `version`}}",
-              "version_description": "automated build"
+              "version_description": "TBD"
           }
       ]
     ]

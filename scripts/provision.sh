@@ -2,6 +2,10 @@
 
 ECHOWRAPPER="==============================================\n\n%s\n\n==============================================\n"
 
+#GIT
+printf $ECHOWRAPPER "Installing GIT"
+apt-get install -y git 
+
 #MySQL-Database - percona flavor
 printf $ECHOWRAPPER "Installing Percona Mysql"
 wget https://repo.percona.com/apt/percona-release_0.1-3.$(lsb_release -sc)_all.deb
@@ -92,6 +96,10 @@ debconf-set-selections <<< 'phpmyadmin phpmyadmin/internal/skip-preseed boolean 
 printf $ECHOWRAPPER "Doing the install"
 apt-get install -y phpmyadmin
 sed -i 's~ //\(.*AllowNoPassword.*\)~\1~1' /etc/phpmyadmin/config.inc.php
+sed -i 's~ //\'cookie\';~\'config\';~\1~1' /etc/phpmyadmin/config.inc.php
+sed -i 's~ //dbuser;~\'root\';~\1~1' /etc/phpmyadmin/config.inc.php
+sed -i 's~ //dbpass;~\'\';~\1~1' /etc/phpmyadmin/config.inc.php
+sed -i 's~ //dbserver;~\'127.0.0.1\';~\1~1' /etc/phpmyadmin/config.inc.php
 
 
 #Ruby (required for compass)
