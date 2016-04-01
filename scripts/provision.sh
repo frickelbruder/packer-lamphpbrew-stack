@@ -96,10 +96,10 @@ debconf-set-selections <<< 'phpmyadmin phpmyadmin/internal/skip-preseed boolean 
 printf $ECHOWRAPPER "Doing the install"
 apt-get install -y phpmyadmin
 sed -i 's~ //\(.*AllowNoPassword.*\)~\1~1' /etc/phpmyadmin/config.inc.php
-sed -i 's~ //\'cookie\';~\'config\';~\1~1' /etc/phpmyadmin/config.inc.php
-sed -i 's~ //dbuser;~\'root\';~\1~1' /etc/phpmyadmin/config.inc.php
-sed -i 's~ //dbpass;~\'\';~\1~1' /etc/phpmyadmin/config.inc.php
-sed -i 's~ //dbserver;~\'127.0.0.1\';~\1~1' /etc/phpmyadmin/config.inc.php
+sed -i "s~'cookie';~'config';~1" /etc/phpmyadmin/config.inc.php
+sed -i "s~= \$dbuser;~'root';~1" /etc/phpmyadmin/config.inc.php
+sed -i "s~= \$dbpass;~= '';~1" /etc/phpmyadmin/config.inc.php
+sed -i "s~= \$dbserver;~= '127.0.0.1';~1" /etc/phpmyadmin/config.inc.php
 
 
 #Ruby (required for compass)
