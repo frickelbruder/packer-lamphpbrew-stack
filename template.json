@@ -2,7 +2,8 @@
     "variables": {
         "cloud_token": "{{env `VAGRANT_CLOUD_TOKEN`}}",
         "cloud_repo": "frickelbruder/lamp-stack",
-        "version": "0.0.3"
+        "version": "0.1",
+        "version_description": "fixed typo in phpmyadmin config"
     } ,
     "provisioners": [
         {
@@ -113,7 +114,7 @@
               "box_tag": "{{user `cloud_repo`}}",
               "access_token": "{{user `cloud_token`}}",
               "version": "{{user `version`}}",
-              "version_description": "fixed line endings"
+              "version_description": "{{user `version_description`}}"
           }
       ]
     ]
