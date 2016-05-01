@@ -2,8 +2,8 @@
     "variables": {
         "cloud_token": "{{env `VAGRANT_CLOUD_TOKEN`}}",
         "cloud_repo": "frickelbruder/lamp-stack",
-        "version": "0.1.2",
-        "version_description": "current ruby, biggersize of hdd"
+        "version": "0.1.3",
+        "version_description": "added ssl-host, preconfigured better php values and logging"
     } ,
     "provisioners": [
         {
@@ -28,6 +28,7 @@
             "type": "shell",
             "inline": [
                 "sudo chmod a+w /etc/apache2/sites-available/000-default.conf",
+                "sudo chmod a+w /etc/apache2/sites-available/default-ssl.conf",
                 "sudo chmod a+w /etc/apache2/mods-available/fastcgi.conf",
                 "sudo chmod a+w /opt/phpbrew/php/php-5.6.19/var/db/xdebug.ini",
                 "sudo chmod a+w /etc/init.d"
@@ -37,6 +38,11 @@
           "type": "file",
           "source": "files/default.conf",  
           "destination": "/etc/apache2/sites-available/000-default.conf"
+        },
+        {
+          "type": "file",
+          "source": "files/default-ssl.conf",  
+          "destination": "/etc/apache2/sites-available/default-ssl.conf"
         },
         {
           "type": "file",
@@ -57,6 +63,7 @@
             "type": "shell",
             "inline": [
                 "sudo chmod a-w /etc/apache2/sites-available/000-default.conf",
+                "sudo chmod a-w /etc/apache2/sites-available/default-ssl.conf",
                 "sudo chmod a-w /etc/apache2/mods-available/fastcgi.conf",
                 "sudo chmod a+x /etc/init.d/php-fpm",
                 "sudo chmod a-w /etc/init.d",

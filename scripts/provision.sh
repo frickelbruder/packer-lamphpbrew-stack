@@ -16,7 +16,10 @@ apt-get install -y percona-server-server
 #Apache2
 printf $ECHOWRAPPER "Installing Apache"
 apt-get install -y apache2 apache2-utils libapache2-mod-fastcgi
-a2enmod actions fastcgi alias rewrite
+a2enmod actions fastcgi alias rewrite ssl
+a2ensite default-ssl
+echo 'umask 002' >> /etc/apache2/envvars
+usermod -g www-data vagrant
 service apache2 restart
 
 
@@ -56,13 +59,42 @@ echo "export PHPBREW_HOME=/opt/phpbrew" >> /etc/bash.bashrc
 echo "source /opt/phpbrew/bashrc" >> /etc/bash.bashrc
 
 chown -R root: /opt/phpbrew    
-sed -i 's/ = nobody/ = www-data/' /opt/phpbrew/php/php-5.6.19/etc/php-fpm.conf
-sed -i 's/;date.timezone =/date.timezone = Europe\/Berlin/' /opt/phpbrew/php/php-5.6.19/etc/php.ini                                        
+sed -i 's/ = nobody/ = www-data/' /opt/phpbrew/php/php-5.6.19/etc/php-fpm.conf                                     
 
 phpbrew switch 5.6.19 
 phpbrew ext install xdebug stable
    
 ##PHPDEVELOPMENT
+### PHP konfigurieren
+printf $ECHOWRAPPER "Configuring PHP"
+cd ~
+wget https://github.com/frickelbruder/php-ini-setter/releases/download/1.1.1/php-ini-setter.phar
+chmod a+x php-ini-setter.phar
+./php-ini-setter.phar --name short_open_tag --value On --file /etc/php5/apache2/php.ini
+./php-ini-setter.phar --name memory_limit --value 512M --file /etc/php5/apache2/php.ini
+./php-ini-setter.phar --name log_errors --value On --file /etc/php5/apache2/php.ini
+./php-ini-setter.phar --name error_log --value /var/log/php_errors.log --file /etc/php5/apache2/php.ini
+./php-ini-setter.phar --name max_execution_time --value 120 --file /etc/php5/apache2/php.ini
+./php-ini-setter.phar --name date.timezone --value Europe/Berlin --file /etc/php5/apache2/php.ini
+
+./php-ini-setter.phar --name short_open_tag --value On --file /etc/php5/cli/php.ini
+./php-ini-setter.phar --name memory_limit --value 512M --file /etc/php5/cli/php.ini
+./php-ini-setter.phar --name log_errors --value On --file /etc/php5/cli/php.ini
+./php-ini-setter.phar --name error_log --value /var/log/php_errors.log --file /etc/php5/cli/php.ini
+./php-ini-setter.phar --name max_execution_time --value 120 --file /etc/php5/cli/php.ini
+./php-ini-setter.phar --name date.timezone --value Europe/Berlin --file /etc/php5/cli/php.ini
+
+./php-ini-setter.phar --name short_open_tag --value On --file /opt/phpbrew/php/php-5.6.19/etc/php.ini
+./php-ini-setter.phar --name memory_limit --value 512M --file /opt/phpbrew/php/php-5.6.19/etc/php.ini
+./php-ini-setter.phar --name log_errors --value On --file /opt/phpbrew/php/php-5.6.19/etc/php.ini
+./php-ini-setter.phar --name error_log --value /var/log/php_errors.log --file /opt/phpbrew/php/php-5.6.19/etc/php.ini
+./php-ini-setter.phar --name max_execution_time --value 120 --file /opt/phpbrew/php/php-5.6.19/etc/php.ini
+./php-ini-setter.phar --name date.timezone --value Europe/Berlin --file /opt/phpbrew/php/php-5.6.19/etc/php.ini
+
+touch /var/log/php_errors.log
+chmod 0777 /var/log/php_errors.log
+
+
 ###PHPUNIT
 printf $ECHOWRAPPER "Installing Phpunit"
 wget https://phar.phpunit.de/phpunit.phar
@@ -122,3 +154,5 @@ apt-get install -y nodejs
 #Bower
 printf $ECHOWRAPPER "Installing Bower"
 npm install -g bower
+
+exit 0
