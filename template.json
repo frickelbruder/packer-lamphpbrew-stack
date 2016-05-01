@@ -31,7 +31,8 @@
                 "sudo chmod a+w /etc/apache2/sites-available/default-ssl.conf",
                 "sudo chmod a+w /etc/apache2/mods-available/fastcgi.conf",
                 "sudo chmod a+w /opt/phpbrew/php/php-5.6.19/var/db/xdebug.ini",
-                "sudo chmod a+w /etc/init.d"
+                "sudo chmod a+w /etc/init.d",
+                "sudo chmod a+w /etc/phpmyadmin/conf.d"
              ]
         },
         {
@@ -59,6 +60,11 @@
           "source": "files/php-fpm",  
           "destination": "/etc/init.d/php-fpm"
         }, 
+                {
+          "type": "file",
+          "source": "files/everlasting_cookie.php",  
+          "destination": "/etc/phpmyadmin/conf.d/everlasting_cookie.php"
+        },
         {
             "type": "shell",
             "inline": [
@@ -67,7 +73,8 @@
                 "sudo chmod a-w /etc/apache2/mods-available/fastcgi.conf",
                 "sudo chmod a+x /etc/init.d/php-fpm",
                 "sudo chmod a-w /etc/init.d",
-                "sudo update-rc.d php-fpm defaults"
+                "sudo update-rc.d php-fpm defaults",
+                "sudo chmod a-w /etc/phpmyadmin/conf.d"
              ]
         }
     ],
