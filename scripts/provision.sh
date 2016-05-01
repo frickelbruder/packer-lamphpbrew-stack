@@ -68,7 +68,7 @@ phpbrew ext install xdebug stable
 ### PHP konfigurieren
 printf $ECHOWRAPPER "Configuring PHP"
 cd ~
-wget https://github.com/frickelbruder/php-ini-setter/releases/download/1.1.1/php-ini-setter.phar
+wget https://github.com/frickelbruder/php-ini-setter/releases/download/1.1.2/php-ini-setter.phar
 chmod a+x php-ini-setter.phar
 ./php-ini-setter.phar --name short_open_tag --value On --file /etc/php5/apache2/php.ini
 ./php-ini-setter.phar --name memory_limit --value 512M --file /etc/php5/apache2/php.ini
