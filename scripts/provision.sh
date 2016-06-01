@@ -20,6 +20,9 @@ a2enmod actions fastcgi alias rewrite ssl
 a2ensite default-ssl
 echo 'umask 002' >> /etc/apache2/envvars
 usermod -g www-data vagrant
+sed -i 's/ = nobody/ = www-data/' /opt/phpbrew/php/php-5.6.19/etc/php-fpm.conf 
+sed -i 's~FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi~FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -idle-timeout 120~'    /etc/apache2/mods-enabled/fastcgi.conf
+
 service apache2 restart
 
 
