@@ -145,6 +145,10 @@ rvm requirements
 rvm install ruby-head
 rvm use ruby-head --default 
 
+usermod -a -G rvm vagrant
+echo ". /etc/profile.d/rvm.sh" >> ~/.bashrc
+echo ". /etc/profile.d/rvm.sh" >> ~vagrant/.bashrc
+
 #Compass
 printf $ECHOWRAPPER "Installing Compass"
 gem install compass
