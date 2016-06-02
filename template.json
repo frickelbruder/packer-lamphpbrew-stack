@@ -2,8 +2,8 @@
     "variables": {
         "cloud_token": "{{env `VAGRANT_CLOUD_TOKEN`}}",
         "cloud_repo": "frickelbruder/lamp-stack",
-        "version": "0.1.3",
-        "version_description": "added ssl-host, preconfigured better php values and logging"
+        "version": "0.1.4",
+        "version_description": "let fastcgi wait for slow php pages"
     } ,
     "provisioners": [
         {
