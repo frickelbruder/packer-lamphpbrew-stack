@@ -124,11 +124,16 @@
               
           },
           {
-              "type": "vagrant-cloud",
-              "box_tag": "{{user `cloud_repo`}}",
-              "access_token": "{{user `cloud_token`}}",
-              "version": "{{user `version`}}",
-              "version_description": "{{user `version_description`}}"
+              "type": "atlas",
+              "token": "{{user `cloud_token`}}",
+              "artifact": "{{user `cloud_repo`}}",
+              "artifact_type": "vagrant.box",
+              "metadata": {
+                  "provider": "virtualbox",
+                  "created_at": "{{timestamp}}" ,
+                  "version": "{{user `version`}}",
+                  "description":  "{{user `version_description`}}"
+              }
           }
       ]
     ]
